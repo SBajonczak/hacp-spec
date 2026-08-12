@@ -1,58 +1,253 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.org/hacp/schema/0.1/hacp.schema.json",
+  "$id": "https://example.org/hacp/schema/0.2/hacp.schema.json",
   "title": "Human-AI Contribution Provenance",
-  "description": "Machine-readable provenance information describing human and generative AI contributions to content.",
+  "description": "Experimental HACP v0.2 schema for describing human and AI contribution workflows.",
   "type": "object",
-  "required": ["specVersion", "origin", "aiInvolvement"],
+  "required": [
+    "specVersion",
+    "workflow"
+  ],
   "properties": {
-    "specVersion": { "type": "string", "const": "0.1" },
-    "origin": { "type": "string", "enum": ["human", "mixed", "ai"] },
-    "aiInvolvement": { "type": "string", "enum": ["none", "assisted", "collaborative", "generated"] },
-    "humanReviewed": { "type": "boolean" },
-    "contributions": {
+    "specVersion": {
+      "type": "string",
+      "const": "0.2"
+    },
+    "summary": {
       "type": "object",
       "properties": {
-        "human": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
-        "ai": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+        "aiInvolvement": {
+          "type": "string",
+          "enum": [
+            "none",
+            "assisted",
+            "collaborative",
+            "generated"
+          ]
+        }
       },
       "additionalProperties": false
     },
-    "generator": {
+    "systems": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/system"
+      }
+    },
+    "workflow": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/workflowStep"
+      }
+    },
+    "issuer": {
+      "$ref": "#/$defs/issuer"
+    },
+    "extensions": {
       "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "$defs": {
+    "system": {
+      "type": "object",
+      "required": [
+        "id",
+        "provider"
+      ],
       "properties": {
-        "provider": { "type": "string" },
-        "model": { "type": "string" },
-        "system": { "type": "string" },
-        "requestId": { "type": "string" }
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provider": {
+          "type": "object",
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "identifier": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "model": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "identifier": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "product": {
+          "type": "string",
+          "minLength": 1
+        }
       },
       "additionalProperties": false
     },
-    "content": {
+    "humanActor": {
       "type": "object",
-      "required": ["hashAlgorithm", "hash"],
+      "required": [
+        "type"
+      ],
       "properties": {
-        "hashAlgorithm": { "type": "string", "enum": ["sha256"] },
-        "hash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" }
+        "type": {
+          "const": "human"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "aiActor": {
+      "type": "object",
+      "required": [
+        "type",
+        "systemId"
+      ],
+      "properties": {
+        "type": {
+          "const": "ai"
+        },
+        "systemId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "contribution": {
+      "type": "string",
+      "enum": [
+        "concept",
+        "research",
+        "research-assistance",
+        "expertise",
+        "facts",
+        "fact-checking",
+        "argument",
+        "creative-direction",
+        "brainstorming",
+        "structure",
+        "drafting",
+        "wording",
+        "translation",
+        "summarization",
+        "editing",
+        "review",
+        "approval",
+        "generation"
+      ]
+    },
+    "workflowStep": {
+      "type": "object",
+      "required": [
+        "id",
+        "sequence",
+        "actor",
+        "contributions",
+        "influence"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "dependsOn": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "actor": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/humanActor"
+            },
+            {
+              "$ref": "#/$defs/aiActor"
+            }
+          ]
+        },
+        "contributions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/contribution"
+          }
+        },
+        "influence": {
+          "type": "string",
+          "enum": [
+            "minor",
+            "supporting",
+            "substantial",
+            "primary"
+          ]
+        },
+        "description": {
+          "type": "string"
+        },
+        "extensions": {
+          "type": "object",
+          "additionalProperties": true
+        }
       },
       "additionalProperties": false
     },
     "issuer": {
       "type": "object",
-      "required": ["type", "name"],
+      "required": [
+        "type",
+        "name"
+      ],
       "properties": {
-        "type": { "type": "string", "enum": ["author", "publisher", "ai-provider", "platform", "editor", "tool"] },
-        "name": { "type": "string" }
-      },
-      "additionalProperties": false
-    },
-    "signature": {
-      "type": "object",
-      "required": ["algorithm", "keyId", "value"],
-      "properties": {
-        "algorithm": { "type": "string", "enum": ["Ed25519"] },
-        "keyId": { "type": "string" },
-        "value": { "type": "string" }
+        "type": {
+          "type": "string",
+          "enum": [
+            "author",
+            "publisher",
+            "platform",
+            "editor",
+            "tool",
+            "ai-provider"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "identifier": {
+          "type": "string",
+          "minLength": 1
+        }
       },
       "additionalProperties": false
     }
