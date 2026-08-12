@@ -1,3 +1,7 @@
+Specification: v0.2 Draft
+Reference Viewer: available
+Live Demo: coming soon
+
 # Human–AI Contribution Provenance
 
 > Working name: **HACP**  
