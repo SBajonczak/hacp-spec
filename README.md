@@ -126,6 +126,14 @@ HACP represents this as structured, machine-readable metadata.
 
 ---
 
+## Reference implementation
+
+A reference viewer for HACP manifests is available here:
+
+**HACP Viewer:** https://github.com/SBajonczak/hacp-viewer
+
+The viewer provides graph, timeline and compact visualizations of HACP workflows.
+
 ## Why another provenance specification?
 
 A binary label such as:
