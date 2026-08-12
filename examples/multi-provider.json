@@ -1,0 +1,123 @@
+{
+  "specVersion": "0.2",
+  "summary": {
+    "aiInvolvement": "collaborative"
+  },
+  "systems": [
+    {
+      "id": "sys-research-1",
+      "provider": {
+        "name": "Example Research AI"
+      },
+      "model": {
+        "name": "Research Model"
+      }
+    },
+    {
+      "id": "sys-writing-1",
+      "provider": {
+        "name": "Example Writing AI"
+      },
+      "model": {
+        "name": "Writing Model"
+      }
+    },
+    {
+      "id": "sys-translation-1",
+      "provider": {
+        "name": "Example Translation Provider"
+      },
+      "product": "Translation Service"
+    }
+  ],
+  "workflow": [
+    {
+      "id": "step-1",
+      "sequence": 1,
+      "actor": {
+        "type": "human",
+        "id": "author-1",
+        "role": "author"
+      },
+      "contributions": [
+        "concept",
+        "expertise",
+        "facts",
+        "creative-direction"
+      ],
+      "influence": "primary"
+    },
+    {
+      "id": "step-2",
+      "sequence": 2,
+      "dependsOn": [
+        "step-1"
+      ],
+      "actor": {
+        "type": "ai",
+        "systemId": "sys-research-1"
+      },
+      "contributions": [
+        "research-assistance",
+        "brainstorming"
+      ],
+      "influence": "supporting"
+    },
+    {
+      "id": "step-3",
+      "sequence": 3,
+      "dependsOn": [
+        "step-1",
+        "step-2"
+      ],
+      "actor": {
+        "type": "ai",
+        "systemId": "sys-writing-1"
+      },
+      "contributions": [
+        "structure",
+        "drafting",
+        "wording"
+      ],
+      "influence": "primary"
+    },
+    {
+      "id": "step-4",
+      "sequence": 4,
+      "dependsOn": [
+        "step-3"
+      ],
+      "actor": {
+        "type": "ai",
+        "systemId": "sys-translation-1"
+      },
+      "contributions": [
+        "translation"
+      ],
+      "influence": "substantial"
+    },
+    {
+      "id": "step-5",
+      "sequence": 5,
+      "dependsOn": [
+        "step-4"
+      ],
+      "actor": {
+        "type": "human",
+        "id": "author-1",
+        "role": "author"
+      },
+      "contributions": [
+        "fact-checking",
+        "editing",
+        "review",
+        "approval"
+      ],
+      "influence": "primary"
+    }
+  ],
+  "issuer": {
+    "type": "author",
+    "name": "Example Author"
+  }
+}

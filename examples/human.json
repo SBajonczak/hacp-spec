@@ -1,14 +1,50 @@
 {
-  "specVersion": "0.1",
-  "origin": "human",
-  "aiInvolvement": "none",
-  "humanReviewed": true,
-  "contributions": {
-    "human": ["concept", "research", "expertise", "facts", "argument", "drafting", "editing", "review"],
-    "ai": []
+  "specVersion": "0.2",
+  "summary": {
+    "aiInvolvement": "none"
   },
+  "workflow": [
+    {
+      "id": "step-1",
+      "sequence": 1,
+      "actor": {
+        "type": "human",
+        "id": "author-1",
+        "role": "author"
+      },
+      "contributions": [
+        "concept",
+        "research",
+        "expertise",
+        "facts",
+        "argument",
+        "structure",
+        "drafting",
+        "wording"
+      ],
+      "influence": "primary"
+    },
+    {
+      "id": "step-2",
+      "sequence": 2,
+      "dependsOn": [
+        "step-1"
+      ],
+      "actor": {
+        "type": "human",
+        "id": "author-1",
+        "role": "author"
+      },
+      "contributions": [
+        "editing",
+        "review",
+        "approval"
+      ],
+      "influence": "primary"
+    }
+  ],
   "issuer": {
-    "type": "publisher",
-    "name": "Example Publisher"
+    "type": "author",
+    "name": "Example Author"
   }
 }

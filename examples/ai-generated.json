@@ -1,16 +1,53 @@
 {
-  "specVersion": "0.1",
-  "origin": "ai",
-  "aiInvolvement": "generated",
-  "humanReviewed": false,
-  "contributions": {
-    "human": ["creative-direction"],
-    "ai": ["brainstorming", "structure", "drafting", "wording", "generation"]
+  "specVersion": "0.2",
+  "summary": {
+    "aiInvolvement": "generated"
   },
-  "generator": {
-    "provider": "Example AI Provider",
-    "model": "Example Model"
-  },
+  "systems": [
+    {
+      "id": "sys-ai-1",
+      "provider": {
+        "name": "Example AI Provider"
+      },
+      "model": {
+        "name": "Example Model"
+      }
+    }
+  ],
+  "workflow": [
+    {
+      "id": "step-1",
+      "sequence": 1,
+      "actor": {
+        "type": "human",
+        "id": "operator-1",
+        "role": "operator"
+      },
+      "contributions": [
+        "creative-direction"
+      ],
+      "influence": "minor"
+    },
+    {
+      "id": "step-2",
+      "sequence": 2,
+      "dependsOn": [
+        "step-1"
+      ],
+      "actor": {
+        "type": "ai",
+        "systemId": "sys-ai-1"
+      },
+      "contributions": [
+        "brainstorming",
+        "structure",
+        "generation",
+        "drafting",
+        "wording"
+      ],
+      "influence": "primary"
+    }
+  ],
   "issuer": {
     "type": "platform",
     "name": "Example Content Platform"
