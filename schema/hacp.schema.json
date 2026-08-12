@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/hacp/schema/0.1/hacp.schema.json",
+  "title": "Human-AI Contribution Provenance",
+  "description": "Machine-readable provenance information describing human and generative AI contributions to content.",
+  "type": "object",
+  "required": ["specVersion", "origin", "aiInvolvement"],
+  "properties": {
+    "specVersion": { "type": "string", "const": "0.1" },
+    "origin": { "type": "string", "enum": ["human", "mixed", "ai"] },
+    "aiInvolvement": { "type": "string", "enum": ["none", "assisted", "collaborative", "generated"] },
+    "humanReviewed": { "type": "boolean" },
+    "contributions": {
+      "type": "object",
+      "properties": {
+        "human": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "ai": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+      },
+      "additionalProperties": false
+    },
+    "generator": {
+      "type": "object",
+      "properties": {
+        "provider": { "type": "string" },
+        "model": { "type": "string" },
+        "system": { "type": "string" },
+        "requestId": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "content": {
+      "type": "object",
+      "required": ["hashAlgorithm", "hash"],
+      "properties": {
+        "hashAlgorithm": { "type": "string", "enum": ["sha256"] },
+        "hash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" }
+      },
+      "additionalProperties": false
+    },
+    "issuer": {
+      "type": "object",
+      "required": ["type", "name"],
+      "properties": {
+        "type": { "type": "string", "enum": ["author", "publisher", "ai-provider", "platform", "editor", "tool"] },
+        "name": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "signature": {
+      "type": "object",
+      "required": ["algorithm", "keyId", "value"],
+      "properties": {
+        "algorithm": { "type": "string", "enum": ["Ed25519"] },
+        "keyId": { "type": "string" },
+        "value": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
