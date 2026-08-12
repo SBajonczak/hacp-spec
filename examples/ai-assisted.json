@@ -1,0 +1,19 @@
+{
+  "specVersion": "0.1",
+  "origin": "human",
+  "aiInvolvement": "assisted",
+  "humanReviewed": true,
+  "contributions": {
+    "human": ["concept", "expertise", "facts", "argument", "creative-direction", "review", "approval"],
+    "ai": ["structure", "wording", "editing"]
+  },
+  "generator": {
+    "provider": "OpenAI",
+    "model": "GPT-5.6",
+    "system": "ChatGPT"
+  },
+  "issuer": {
+    "type": "author",
+    "name": "Example Author"
+  }
+}

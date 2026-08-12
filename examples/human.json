@@ -1,0 +1,14 @@
+{
+  "specVersion": "0.1",
+  "origin": "human",
+  "aiInvolvement": "none",
+  "humanReviewed": true,
+  "contributions": {
+    "human": ["concept", "research", "expertise", "facts", "argument", "drafting", "editing", "review"],
+    "ai": []
+  },
+  "issuer": {
+    "type": "publisher",
+    "name": "Example Publisher"
+  }
+}

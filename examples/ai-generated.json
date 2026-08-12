@@ -1,0 +1,18 @@
+{
+  "specVersion": "0.1",
+  "origin": "ai",
+  "aiInvolvement": "generated",
+  "humanReviewed": false,
+  "contributions": {
+    "human": ["creative-direction"],
+    "ai": ["brainstorming", "structure", "drafting", "wording", "generation"]
+  },
+  "generator": {
+    "provider": "Example AI Provider",
+    "model": "Example Model"
+  },
+  "issuer": {
+    "type": "platform",
+    "name": "Example Content Platform"
+  }
+}
