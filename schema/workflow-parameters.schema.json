@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/hacp/0.3/workflow-parameters.schema.json",
+  "title": "HACP v0.3 Experimental C2PA Workflow Parameters",
+  "description": "Validates the experimental com.bajonczak.hacp.* parameter subset used inside C2PA Actions.",
+  "type": "object",
+  "properties": {
+    "com.bajonczak.hacp.actionId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "com.bajonczak.hacp.dependsOn": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200,
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+      }
+    },
+    "com.bajonczak.hacp.contributions": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "concept",
+          "research",
+          "research-assistance",
+          "expertise",
+          "facts",
+          "fact-checking",
+          "argument",
+          "creative-direction",
+          "brainstorming",
+          "structure",
+          "drafting",
+          "wording",
+          "summarization",
+          "review",
+          "approval"
+        ]
+      }
+    },
+    "com.bajonczak.hacp.influence": {
+      "type": "string",
+      "enum": ["minor", "supporting", "substantial", "primary"]
+    }
+  },
+  "required": ["com.bajonczak.hacp.actionId"],
+  "additionalProperties": true
+}
