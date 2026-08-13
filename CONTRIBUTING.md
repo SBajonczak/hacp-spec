@@ -1,93 +1,50 @@
 # Contributing
 
-Thank you for taking an interest in Human–AI Contribution Provenance.
+HACP is currently an experimental C2PA / CAWG interoperability project.
 
-HACP is an experimental specification and critical feedback is welcome.
+Critical feedback is welcome, especially feedback that shows an experimental HACP concept is already solved by an existing standard.
 
----
+## Upstream-first principle
 
-## What contributions are useful?
+Before proposing a new HACP field or structure, ask:
 
-Useful contributions include:
+1. Can C2PA already represent this?
+2. Can CAWG already represent this?
+3. Can an existing Action, Region, Ingredient, identity or process-evidence mechanism represent it?
+4. Is this only a UX concern rather than a provenance semantic?
+5. Does a custom entity-specific extension already provide enough room to experiment?
 
-- specification issues,
-- terminology criticism,
-- edge cases,
-- interoperability concerns,
+If the answer is yes, prefer the existing mechanism.
+
+## Useful contributions
+
+- corrections to the C2PA/CAWG mapping,
+- examples that break the current dependency model,
+- realistic human/AI edit loops,
 - privacy concerns,
-- security concerns,
-- example workflows,
-- JSON Schema improvements,
-- C2PA integration proposals,
-- implementation experiments.
+- interoperability concerns,
+- validator implementations,
+- C2PA test assets,
+- CAWG identity experiments,
+- alternative process-evidence designs.
 
----
+## Proposed workflow
 
-## Design principles
+For semantic changes:
 
-When proposing changes, please prefer solutions that are:
+1. open an issue,
+2. describe the concrete workflow,
+3. show how existing C2PA/CAWG mechanisms behave,
+4. identify the precise missing semantic,
+5. prototype it using an entity-specific extension when possible,
+6. seek upstream feedback before treating it as stable.
 
-- vendor neutral,
-- understandable without proprietary infrastructure,
-- privacy preserving,
-- interoperable,
-- explicit about trust assumptions,
-- resistant to fake numerical precision,
-- useful for both human-readable and machine-readable representations.
+## Experimental namespace
 
----
-
-## Issues before pull requests
-
-For significant changes to the data model, opening an issue first is encouraged.
-
-Please describe:
-
-1. the problem,
-2. a real-world example,
-3. the proposed change,
-4. compatibility impact,
-5. possible alternatives.
-
----
-
-## Versioning
-
-Until a stable release exists, breaking changes are expected.
-
-Draft versions use:
+The current prototype uses:
 
 ```text
-0.x
+com.bajonczak.hacp.*
 ```
 
-A future `1.0` release should only happen after:
-
-- the naming is stable,
-- interoperability has been tested,
-- the vocabulary is sufficiently mature,
-- trust and C2PA integration have been reviewed.
-
----
-
-## Security and privacy
-
-Please do not include:
-
-- API keys,
-- private prompts,
-- personal conversations,
-- confidential documents,
-- production credentials,
-
-in examples or issue reports.
-
----
-
-## Commercial implementations
-
-The specification is intended to remain openly implementable.
-
-Contributors are free to build commercial products and services around it, subject to the repository license and applicable third-party rights.
-
-Commercial implementations do not receive special influence over the open specification solely because they are commercial.
+This namespace is experimental and must not be presented as an official C2PA namespace.

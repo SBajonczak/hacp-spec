@@ -1,179 +1,112 @@
-# HACP and C2PA
+# HACP v0.3 and C2PA / CAWG
 
-Status: **Experimental mapping note for HACP v0.2**
+Status: **Working interoperability map**
 
----
+## Direction
 
-## 1. Purpose
+HACP v0.3 is no longer designed as a parallel provenance layer.
 
-HACP is designed to complement existing provenance standards rather than replace them.
+The project now starts from the assumption that C2PA and CAWG should provide the foundation.
 
-The responsibilities are intentionally separated.
+HACP only experiments with workflow semantics that may not currently be interoperable.
 
-### HACP focuses on contribution semantics
+## Reuse first
 
-HACP describes:
+| HACP v0.2 concept | Preferred mechanism in v0.3 |
+|---|---|
+| `systems` | C2PA `softwareAgent` / AI Disclosure |
+| AI provider/model | AI Disclosure + existing generator/software metadata |
+| human actor | CAWG Identity Assertion |
+| issuer | C2PA signer / CAWG identity where applicable |
+| human review summary | AI Disclosure human oversight |
+| content binding | C2PA |
+| signatures/trust | C2PA |
+| content regions | C2PA Regions of Interest |
+| input assets | C2PA Ingredients |
+| translation | standard C2PA translation Action |
+| generic edit | standard C2PA edit Actions |
+| process log | C2PA external process evidence |
 
-- which humans or AI systems participated,
-- what each actor contributed,
-- the order of contributions,
-- dependencies between workflow stages,
-- qualitative influence of each actor.
+## Experimental additions
 
-### Provenance frameworks focus on trust infrastructure
-
-An established provenance framework such as C2PA can provide mechanisms for:
-
-- binding provenance to content,
-- digital signatures,
-- signer identity,
-- trust chains,
-- validation,
-- provenance history.
-
-HACP SHOULD reuse such mechanisms instead of defining competing cryptographic infrastructure.
-
----
-
-## 2. Conceptual relationship
+The current experiment tests only:
 
 ```text
-HACP
-  │
-  │ describes
-  ▼
-Human / AI contribution workflow
-  │
-  │ carried by or referenced from
-  ▼
-Provenance framework
-  │
-  │ binds and signs
-  ▼
-Digital content
+action instance identity
+causal dependencies
+contribution semantics
+optional influence
 ```
 
-HACP therefore acts as a semantic layer.
+using namespaced custom Action parameters.
 
----
+## Why ordering is being tested
 
-## 3. Why HACP is still useful
+A set of Actions can say what happened.
 
-Existing provenance systems can describe that AI was used or that a human validated content.
-
-HACP aims to describe a finer-grained workflow.
-
-Example:
+Collaborative provenance may also need to answer:
 
 ```text
-Step 1  Human     concept + expertise          primary
-Step 2  AI A      research assistance          supporting
-Step 3  AI B      structure + drafting         primary
-Step 4  AI C      translation                  substantial
-Step 5  Human     fact-check + approval         primary
+What happened after what?
+What depended on which review?
+Was there an AI modification after human approval?
+Which parallel research branches fed the final draft?
 ```
 
-This information is useful for:
+The experiment intentionally separates chronology from causal dependency.
 
-- transparency,
-- enterprise governance,
-- publishing workflows,
-- provider analytics,
-- compliance rules,
-- content labeling.
+## `related` is not assumed to mean `dependsOn`
 
----
+HACP v0.3 does not reinterpret C2PA `related`.
 
-## 4. Future assertion mapping
+The project treats it as an existing C2PA concept with its own semantics.
 
-A future HACP version may define a dedicated assertion payload that can be embedded into or referenced by a C2PA manifest.
+Any causal dependency proposal should use a separate experimental field until the community confirms the correct model.
 
-Conceptual example:
+## Identity
 
-```json
-{
-  "specVersion": "0.2",
-  "systems": [
-    {
-      "id": "sys-ai-1",
-      "provider": {
-        "name": "Example AI Provider"
-      }
-    }
-  ],
-  "workflow": [
-    {
-      "id": "step-1",
-      "sequence": 1,
-      "actor": {
-        "type": "ai",
-        "systemId": "sys-ai-1"
-      },
-      "contributions": [
-        "drafting"
-      ],
-      "influence": "primary"
-    }
-  ]
-}
-```
+HACP v0.3 intentionally removes its own human actor structure.
 
-The exact assertion label and namespace are intentionally not fixed in v0.2.
+CAWG should be used for named/verifiable actors.
 
-A stable name SHOULD only be defined after:
+An interoperability experiment is still needed to determine the cleanest way to associate a CAWG actor with one specific logical action instance when an Actions assertion contains multiple Action items.
 
-- the project name is finalized,
-- a stable namespace is available,
-- interoperability requirements have been tested.
+## AI model linkage
 
----
+HACP v0.3 intentionally removes its own AI system registry.
 
-## 5. Mapping principle
-
-HACP SHOULD NOT duplicate information already represented authoritatively by the surrounding provenance framework.
-
-For example, HACP does not need to invent its own:
-
-- certificate format,
-- signature algorithm profile,
-- revocation model,
-- timestamp format,
-- trust store.
-
-Instead, HACP should contribute the information that is unique to its purpose:
-
-> Who contributed what, when, and with what qualitative influence?
-
----
-
-## 6. Step attestations
-
-A future integration may allow individual workflow steps to carry attestations from the systems that actually performed them.
-
-Concept:
+A future experiment should test:
 
 ```text
-Human concept
-    │
-    ▼
-AI research
-    │  ✓ provider attestation
-    ▼
-AI draft
-    │  ✓ provider attestation
-    ▼
-Human review
-    │  ✓ publisher attestation
-    ▼
-Published asset
+Action
+   │
+   ├── softwareAgent
+   │
+   └── related assertion
+          ↓
+      AI Disclosure
 ```
 
-This would make provenance stronger than a single self-declared manifest.
+## Process evidence
 
----
+C2PA supports hashed external creation-process evidence such as audit logs and version histories.
 
-## 7. Non-goal
+This creates a legitimate alternative architecture to putting workflow-graph fields directly into Actions.
 
-HACP does not attempt to become a replacement for C2PA.
+## Preferred upstream path
 
-The preferred direction is interoperability.
+```text
+existing C2PA/CAWG mapping
+        ↓
+entity-specific prototype
+        ↓
+real edit-loop test
+        ↓
+community review
+        ↓
+small gap proposal
+        ↓
+upstream PR only after direction is agreed
+```
+
+The goal is to contribute the smallest useful missing semantics rather than preserve HACP as a separate standard.

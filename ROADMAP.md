@@ -1,102 +1,92 @@
 # Roadmap
 
-This roadmap is intentionally short and experimental.
+HACP is an experimental interoperability project.
 
----
+The roadmap changed after mapping the v0.2 model against C2PA and CAWG.
 
-## v0.2 — Workflow model
+## v0.2 — Standalone workflow exploration
 
-Status: **Current draft**
+Status: **Released / historical**
 
-Goals:
+The v0.2 draft explored multiple AI systems, workflow steps, `dependsOn`, contribution vocabulary, qualitative influence, human review and future attestations.
 
-- [x] support multiple AI systems
-- [x] introduce workflow steps
-- [x] introduce `dependsOn`
-- [x] define qualitative influence levels
-- [x] unify human and AI contribution vocabulary
-- [x] represent human review as workflow activity
-- [x] separate contribution semantics from cryptographic trust
-- [x] document intended C2PA relationship
+The release remains available as design history.
 
----
+The project does not currently plan to continue the standalone provenance format.
 
-## v0.3 — Validation and interoperability
+## v0.3 — C2PA workflow experiment
 
-Potential goals:
+Status: **Current working draft**
 
-- [ ] reference validator
-- [ ] semantic validation beyond JSON Schema
-- [ ] reject dependency cycles
-- [ ] validate `systemId` references
-- [ ] define stable extension rules
-- [ ] refine contribution vocabulary
-- [ ] add partial-document examples
-- [ ] add translation and summarization inheritance examples
-- [ ] define a draft C2PA assertion mapping
-- [ ] create interoperability test vectors
+- [x] complete C2PA / CAWG gap analysis
+- [x] pivot away from duplicate provenance infrastructure
+- [x] define experimental Action instance ID
+- [x] define experimental causal `dependsOn`
+- [x] retain contribution vocabulary only as an experiment
+- [x] demote `influence` to optional/low-priority metadata
+- [x] define edit-loop test case
+- [x] define branched workflow test case
+- [ ] build semantic validator for experimental parameters
+- [ ] update reference viewer to consume C2PA Action fragments
+- [ ] test AI Disclosure linkage
+- [ ] test CAWG actor linkage
+- [ ] test C2PA Regions of Interest with text edits
+- [ ] create a complete signed C2PA proof of concept
+- [ ] compare Action-native graph vs external process-evidence graph
+- [ ] ask C2PA community to validate the identified gaps
 
----
+## First upstream candidate
 
-## v0.4 — Attestations
+The first standards discussion should stay intentionally small.
 
-Potential goals:
+Candidate primitives:
 
-- [ ] define abstract step attestation model
-- [ ] distinguish self-declared and externally attested steps
-- [ ] support AI-provider attestations
-- [ ] support publisher attestations
-- [ ] support tool/platform attestations
-- [ ] define attestation status and verification result semantics
+1. stable identity for an individual Action execution,
+2. causal dependency between Action executions.
 
-The specification SHOULD avoid inventing custom cryptographic primitives.
+No PR should be prepared until the intended abstraction level is confirmed by the C2PA community.
 
----
+## Secondary research
+
+- [ ] evaluate contribution vocabulary
+- [ ] evaluate provider attestation patterns
+- [ ] evaluate detailed human review semantics
+- [ ] evaluate privacy implications
+- [ ] evaluate cross-manifest workflow references
+
+## Low-priority / controversial research
+
+- [ ] qualitative contribution influence
+- [ ] governance interpretation of influence
+- [ ] UX representation of contribution importance
 
 ## Reference tooling
 
-Potential open-source tools:
+- [ ] workflow parameter validator
+- [ ] graph visualizer for C2PA Actions
+- [ ] edit-loop visualization
+- [ ] C2PA/CAWG interoperability test vectors
+- [ ] CLI inspection tool
+- [ ] signed proof-of-concept asset
 
-- [ ] JSON Schema validator
-- [ ] workflow graph visualizer
-- [ ] command-line validator
-- [ ] JavaScript / TypeScript SDK
-- [ ] .NET SDK
-- [ ] reference C2PA mapping demo
+## Success criteria
 
----
+### Outcome A
 
-## Commercial ecosystem opportunities
+The experiments reveal that C2PA/CAWG already provide a clean solution.
 
-These are not part of the open specification.
+Result: remove the redundant HACP concept and document the correct mapping.
 
-Potential services include:
+### Outcome B
 
-- verified issuer identity,
-- signing and key-management APIs,
-- provider attestation gateways,
-- audit logs,
-- enterprise governance policies,
-- CMS integrations,
-- compliance reporting,
-- provider participation analytics,
-- high-volume verification APIs,
-- private enterprise deployment,
-- SLA-backed verification infrastructure.
+The experiments identify a small useful interoperability gap.
 
-The open specification and commercial infrastructure SHOULD remain separable.
+Result: propose that gap upstream and help implement it.
 
----
+### Outcome C
 
-## Open design questions
+The workflow belongs in external process evidence rather than C2PA Actions.
 
-Important unresolved topics:
+Result: prototype an interoperable evidence schema and discuss it with the community.
 
-1. How should influence be aggregated without creating fake precision?
-2. How should manual editing affect inherited provenance?
-3. How should partial-document provenance be represented?
-4. Can providers attest to generation events without disclosing prompts?
-5. How should privacy-preserving provider analytics work?
-6. How should provenance survive exports and format conversions?
-7. How should trustworthy publisher identity be represented?
-8. How should HACP interoperate with C2PA without duplicating it?
+A standalone HACP standard is no longer the primary success criterion.
