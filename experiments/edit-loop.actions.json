@@ -1,0 +1,69 @@
+{
+  "actions": [
+    {
+      "action": "com.bajonczak.hacp.concept",
+      "description": "Human supplied the topic, facts and intended direction.",
+      "parameters": {
+        "com.bajonczak.hacp.actionId": "human-concept-1",
+        "com.bajonczak.hacp.contributions": ["concept", "expertise", "facts", "creative-direction"]
+      }
+    },
+    {
+      "action": "c2pa.created",
+      "description": "AI system produced the first draft.",
+      "softwareAgent": {"name": "Example AI Writing Tool"},
+      "parameters": {
+        "com.bajonczak.hacp.actionId": "ai-draft-1",
+        "com.bajonczak.hacp.dependsOn": ["human-concept-1"],
+        "com.bajonczak.hacp.contributions": ["structure", "drafting", "wording"]
+      }
+    },
+    {
+      "action": "com.bajonczak.hacp.review",
+      "description": "Human reviewed the first draft and identified factual problems.",
+      "parameters": {
+        "com.bajonczak.hacp.actionId": "human-review-1",
+        "com.bajonczak.hacp.dependsOn": ["ai-draft-1"],
+        "com.bajonczak.hacp.contributions": ["fact-checking", "review"]
+      }
+    },
+    {
+      "action": "c2pa.edited",
+      "description": "AI system rewrote sections following the human review.",
+      "softwareAgent": {"name": "Example AI Writing Tool"},
+      "parameters": {
+        "com.bajonczak.hacp.actionId": "ai-rewrite-1",
+        "com.bajonczak.hacp.dependsOn": ["human-review-1"],
+        "com.bajonczak.hacp.contributions": ["drafting", "wording"]
+      }
+    },
+    {
+      "action": "c2pa.edited",
+      "description": "A second AI system performed a wording pass.",
+      "softwareAgent": {"name": "Example AI Editing Tool"},
+      "parameters": {
+        "com.bajonczak.hacp.actionId": "ai-wording-1",
+        "com.bajonczak.hacp.dependsOn": ["ai-rewrite-1"],
+        "com.bajonczak.hacp.contributions": ["wording"]
+      }
+    },
+    {
+      "action": "com.bajonczak.hacp.review",
+      "description": "Human performed final fact-checking.",
+      "parameters": {
+        "com.bajonczak.hacp.actionId": "human-factcheck-1",
+        "com.bajonczak.hacp.dependsOn": ["ai-wording-1"],
+        "com.bajonczak.hacp.contributions": ["fact-checking", "review"]
+      }
+    },
+    {
+      "action": "com.bajonczak.hacp.approval",
+      "description": "Human approved the final content for publication.",
+      "parameters": {
+        "com.bajonczak.hacp.actionId": "human-approval-1",
+        "com.bajonczak.hacp.dependsOn": ["human-factcheck-1"],
+        "com.bajonczak.hacp.contributions": ["approval"]
+      }
+    }
+  ]
+}

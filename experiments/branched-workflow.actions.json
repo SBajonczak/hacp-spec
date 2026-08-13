@@ -1,0 +1,41 @@
+{
+  "actions": [
+    {
+      "action": "com.bajonczak.hacp.concept",
+      "description": "Human defined the topic and intended argument.",
+      "parameters": {
+        "com.bajonczak.hacp.actionId": "human-concept-1",
+        "com.bajonczak.hacp.contributions": ["concept", "creative-direction"]
+      }
+    },
+    {
+      "action": "com.bajonczak.hacp.research",
+      "description": "Human performed source research.",
+      "parameters": {
+        "com.bajonczak.hacp.actionId": "human-research-1",
+        "com.bajonczak.hacp.dependsOn": ["human-concept-1"],
+        "com.bajonczak.hacp.contributions": ["research"]
+      }
+    },
+    {
+      "action": "com.bajonczak.hacp.researchAssistance",
+      "description": "AI system assisted with research.",
+      "softwareAgent": {"name": "Example AI Research Tool"},
+      "parameters": {
+        "com.bajonczak.hacp.actionId": "ai-research-1",
+        "com.bajonczak.hacp.dependsOn": ["human-concept-1"],
+        "com.bajonczak.hacp.contributions": ["research-assistance"]
+      }
+    },
+    {
+      "action": "c2pa.created",
+      "description": "AI system produced a draft using both research branches.",
+      "softwareAgent": {"name": "Example AI Writing Tool"},
+      "parameters": {
+        "com.bajonczak.hacp.actionId": "ai-draft-1",
+        "com.bajonczak.hacp.dependsOn": ["human-research-1", "ai-research-1"],
+        "com.bajonczak.hacp.contributions": ["structure", "drafting", "wording"]
+      }
+    }
+  ]
+}
