@@ -231,6 +231,12 @@ The project is currently trying to answer a small number of concrete questions:
 
 ---
 
+## Upstream discussion
+
+The workflow ordering and causal dependency experiment is currently being discussed with the C2PA community:
+
+- [c2pa-org/specifications#127 — How should iterative and causally dependent Actions be represented in C2PA?](https://github.com/c2pa-org/specifications/issues/127)
+
 ## Project principle
 
 HACP is not trying to compete with C2PA.
